@@ -10,19 +10,23 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout
+      shell: bash
       uses: actions/checkout@v3
 
     - name: Install Solana Verify
+      shell: bash
       run: |
         cargo install solana-verify
         solana-verify --version
 
     - name: Build
+      shell: bash
       run: |
         solana-verify build --library-name ${{ inputs.library-name }}
         solana-verify get-executable-hash target/deploy/${{ inputs.library-name }}.so
 
     - name: Upload Build
+      shell: bash
       uses: actions/upload-artifact@v3
       with:
         name: verifiable-build
